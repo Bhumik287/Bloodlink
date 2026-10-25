@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: bloodlink_app
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGO_URI=mongodb://mongodb:27017
+      - DB_NAME=bloodlink_db
+      - SESSION_SECRET=bloodlink_production_docker_secret_key_2026
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    container_name: bloodlink_mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

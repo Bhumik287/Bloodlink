@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BloodLink — Blood & Platelet Coordination</title>
+  
+  <!-- 1. Bootstrap 5 (Responsive Grid & Breakpoint Layout) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- 2. Tailwind CSS v3 (Styling & Utilities) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            crimson: {
+              50: '#fdf2f2',
+              100: '#fde8e8',
+              500: '#a81c1c',
+              600: '#941515',
+              700: '#7f1212'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- 3. Custom CSS with Media Queries -->
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <!-- 4. Basic React.js & ReactDOM (Elements, UI Components, JSX, Fetch Data) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- Header & Responsive Navbar -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom py-2.5">
+      <div class="container">
+        <a class="navbar-brand font-extrabold tracking-tight text-white flex items-center gap-2" href="/">
+          <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white text-crimson-600 font-black shadow-sm">🩸</span>
+          <span>BloodLink</span>
+        </a>
+        <button class="navbar-toggler border-0 focus:outline-none focus:ring-2 focus:ring-white/40" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 font-medium">
+            <li class="nav-item"><a class="nav-link active text-white" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link text-white/90 hover:text-white" href="/find-blood.html">Find Blood</a></li>
+            <li class="nav-item"><a class="nav-link text-white/90 hover:text-white" href="/request-blood.html">Request Blood</a></li>
+            <li class="nav-item"><a class="nav-link text-white/90 hover:text-white" href="#how-it-works">How It Works</a></li>
+          </ul>
+
+          <ul class="navbar-nav ms-auto items-center" id="navbar-auth-links">
+            <li class="nav-item">
+              <a class="nav-link text-white font-medium px-3 py-1.5" href="/login.html">
+                <span class="me-1">🔑</span>Login
+              </a>
+            </li>
+            <li class="nav-item ms-lg-2">
+              <a class="nav-link btn bg-white text-crimson-600 hover:bg-slate-100 font-semibold px-4 py-1.5 rounded-lg shadow-sm" href="/register.html">
+                Register
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content (Bootstrap Grid for Responsiveness, Tailwind/CSS for Styling) -->
+  <main class="py-6 flex-grow">
+    <div class="container">
+
+      <!-- Hero Banner using Bootstrap Grid (.row, .col-lg-8, .col-lg-4) & Tailwind Styling -->
+      <div class="hero-banner bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-10 mb-6 transition-all hover:shadow-md">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-crimson-50 text-crimson-700 border border-crimson-100 mb-3">
+              <span>🚨</span>
+              <span>Fast Emergency Blood & Platelet Coordination</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight mb-3">
+              Direct Bridge Between Patients & Voluntary Donors
+            </h1>
+            <p class="text-slate-600 text-base md:text-lg mb-6 leading-relaxed max-w-2xl">
+              An educational full-stack web platform enabling families to instantly post emergency blood requirements and connecting voluntary donors in nearby localities.
+            </p>
+            <div class="d-flex flex-wrap gap-2.5">
+              <a href="/find-blood.html" class="btn btn-danger px-4 py-2.5 rounded-xl font-semibold shadow-sm hover:shadow-md">
+                Find Blood Requests
+              </a>
+              <a href="/request-blood.html" class="btn btn-outline-danger px-4 py-2.5 rounded-xl font-semibold">
+                Submit Request
+              </a>
+              <a href="/register.html?role=donor" class="btn btn-secondary px-4 py-2.5 rounded-xl font-semibold">
+                Register as Donor
+              </a>
+              <a href="/login.html" class="btn btn-outline-dark px-4 py-2.5 rounded-xl font-semibold bg-white shadow-sm hover:bg-slate-50">
+                🔑 Login to Portal
+              </a>
+            </div>
+          </div>
+
+          <!-- Live Database Stats Card (Rendered via Basic React Component) -->
+          <div class="col-lg-4" id="react-stats-root">
+            <!-- React mounts here -->
+            <div class="card border border-slate-200 rounded-2xl shadow-sm p-4 text-center text-slate-400">
+              <span class="text-xs">Loading live summary...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Responsible Use Disclaimer -->
+      <div class="rounded-xl border border-amber-200 bg-amber-50/80 p-4 mb-6 shadow-sm flex items-start gap-3">
+        <span class="text-xl">⚠️</span>
+        <div>
+          <h6 class="font-bold text-amber-900 mb-0.5">Educational Project & Clinical Disclaimer</h6>
+          <p class="text-xs text-amber-800 mb-0 leading-relaxed">
+            BloodLink is a student college project designed for communication coordination. It does not medically verify donor suitability or replace hospital blood banks. Actual donation, cross-matching, and compatibility testing must be conducted by certified hospital medical professionals.
+          </p>
+        </div>
+      </div>
+
+      <!-- How It Works Section (.row g-3, .col-md-4) -->
+      <div class="mb-6" id="how-it-works">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h4 class="text-xl font-bold text-slate-900 mb-0.5">How It Works</h4>
+            <p class="text-xs text-slate-500 mb-0">Three-step emergency coordination workflow.</p>
+          </div>
+        </div>
+
+        <div class="row g-3">
+          <div class="col-md-4">
+            <div class="card h-100 p-4 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+              <div class="w-10 h-10 rounded-xl bg-crimson-50 text-crimson-600 flex items-center justify-center font-bold text-lg mb-3">1</div>
+              <h6 class="font-bold text-slate-900 mb-2">Create a Request</h6>
+              <p class="text-slate-600 text-xs leading-relaxed mb-0">
+                The patient or relative enters the required blood group, units, hospital name, and urgency level.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card h-100 p-4 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+              <div class="w-10 h-10 rounded-xl bg-crimson-50 text-crimson-600 flex items-center justify-center font-bold text-lg mb-3">2</div>
+              <h6 class="font-bold text-slate-900 mb-2">Donors Check & Respond</h6>
+              <p class="text-slate-600 text-xs leading-relaxed mb-0">
+                Available donors browse open requests filtered by blood group and locality, and click "I'm Available to Help".
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card h-100 p-4 bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+              <div class="w-10 h-10 rounded-xl bg-crimson-50 text-crimson-600 flex items-center justify-center font-bold text-lg mb-3">3</div>
+              <h6 class="font-bold text-slate-900 mb-2">Coordinate Directly</h6>
+              <p class="text-slate-600 text-xs leading-relaxed mb-0">
+                The requester receives the donor's contact details in their dashboard and calls them to coordinate donation at the hospital.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Portal Access & Login Section -->
+      <div class="card p-5 bg-white rounded-2xl border border-slate-200 shadow-sm mb-6" id="portal-access">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-7">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-crimson-50 text-crimson-700 border border-crimson-100 mb-2">
+              <span>🔐</span>
+              <span>Account Access & Verification</span>
+            </div>
+            <h4 class="text-xl md:text-2xl font-bold text-slate-900 mb-2">Access Your BloodLink Account</h4>
+            <p class="text-slate-600 text-xs md:text-sm mb-4 leading-relaxed">
+              Already registered as a patient requester, voluntary donor, or system administrator? Log in to monitor open blood requests, track pledged donors, and update your real-time availability.
+            </p>
+            <div class="d-flex flex-wrap gap-2.5">
+              <a href="/login.html" class="btn btn-danger px-4 py-2 rounded-xl text-xs md:text-sm font-semibold shadow-sm hover:shadow-md">
+                🔑 Go to Login Page &rarr;
+              </a>
+              <a href="/register.html" class="btn btn-outline-secondary px-4 py-2 rounded-xl text-xs md:text-sm font-semibold">
+                Create New Account
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+              <h6 class="font-bold text-slate-800 text-xs uppercase tracking-wider mb-2.5">Demo Accounts for Quick Evaluation:</h6>
+              <div class="space-y-2 text-xs text-slate-600 mb-3">
+                <div class="d-flex justify-content-between align-items-center p-2 bg-white rounded-lg border border-slate-200">
+                  <span class="font-semibold text-slate-700">Requester:</span>
+                  <code class="text-crimson-600 font-semibold">requester@example.com</code>
+                </div>
+                <div class="d-flex justify-content-between align-items-center p-2 bg-white rounded-lg border border-slate-200">
+                  <span class="font-semibold text-slate-700">Donor:</span>
+                  <code class="text-crimson-600 font-semibold">donor@example.com</code>
+                </div>
+                <div class="d-flex justify-content-between align-items-center p-2 bg-white rounded-lg border border-slate-200">
+                  <span class="font-semibold text-slate-700">Admin:</span>
+                  <code class="text-crimson-600 font-semibold">admin@bloodlink.org</code>
+                </div>
+              </div>
+              <a href="/login.html" class="w-100 btn btn-sm btn-outline-danger rounded-lg font-semibold py-1.5 text-xs d-block text-center">
+                One-Click Test on Login Page &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blood Compatibility Matrix Card -->
+      <div class="card border border-slate-200 rounded-2xl shadow-sm overflow-hidden mb-6" id="blood-matrix">
+        <div class="card-header bg-slate-50 border-b border-slate-200 px-5 py-3 font-bold text-slate-800 flex items-center justify-between">
+          <span>Blood Group Compatibility Reference</span>
+          <span class="text-xs font-normal text-slate-500">Universal rules guide</span>
+        </div>
+        <div class="card-body p-0 table-responsive">
+          <table class="table table-bordered table-striped mb-0 text-center text-xs align-middle">
+            <thead class="table-light">
+              <tr>
+                <th class="py-2.5">Patient Blood Group</th>
+                <th class="py-2.5">Compatible Donor Groups</th>
+                <th class="py-2.5">Can Donate To</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr>
+                <td class="font-bold text-crimson-700">O-</td>
+                <td>O- only</td>
+                <td class="font-medium text-emerald-700">All Groups (Universal Donor)</td>
+              </tr>
+              <tr>
+                <td class="font-bold text-crimson-700">O+</td>
+                <td>O+, O-</td>
+                <td>O+, A+, B+, AB+</td>
+              </tr>
+              <tr>
+                <td class="font-bold text-crimson-700">A-</td>
+                <td>A-, O-</td>
+                <td>A+, A-, AB+, AB-</td>
+              </tr>
+              <tr>
+                <td class="font-bold text-crimson-700">A+</td>
+                <td>A+, A-, O+, O-</td>
+                <td>A+, AB+</td>
+              </tr>
+              <tr>
+                <td class="font-bold text-crimson-700">B-</td>
+                <td>B-, O-</td>
+                <td>B+, B-, AB+, AB-</td>
+              </tr>
+              <tr>
+                <td class="font-bold text-crimson-700">B+</td>
+                <td>B+, B-, O+, O-</td>
+                <td>B+, AB+</td>
+              </tr>
+              <tr>
+                <td class="font-bold text-crimson-700">AB-</td>
+                <td>AB-, A-, B-, O-</td>
+                <td>AB+, AB-</td>
+              </tr>
+              <tr>
+                <td class="font-bold text-crimson-700">AB+</td>
+                <td class="font-medium text-indigo-700">All Groups (Universal Recipient)</td>
+                <td>AB+ only</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Standard Footer -->
+  <footer class="py-4 bg-white border-t border-slate-200 text-center text-slate-500 text-xs mt-auto">
+    <div class="container">
+      <p class="mb-1 font-semibold text-slate-700">BloodLink — College Innovative Assignment (Full Stack Development)</p>
+      <p class="mb-0">Course Code: 3CS524CC26 | Department of Computer Science & Engineering | Nirma University</p>
+    </div>
+  </footer>
+
+  <!-- Separate React.js Component File (.jsx) for Live Database Stats -->
+  <script type="text/babel" src="/js/liveStats.jsx"></script>
+
+  <!-- Standard Scripts (Existing Logic Preserved Untouched) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

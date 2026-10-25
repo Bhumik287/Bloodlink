@@ -1,0 +1,30 @@
+{
+  "name": "bloodlink",
+  "version": "1.0.0",
+  "description": "BloodLink - Emergency Blood & Platelet Coordination Platform (College Innovative Assignment)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "db:init": "node src/config/initDB.js",
+    "seed:admin": "node src/utils/seedAdmin.js",
+    "test": "node tests/test_e2e_master.js",
+    "test:all": "node tests/test_phase1.js && node tests/test_phase2.js && node tests/test_phase3.js && node tests/test_phase4.js && node tests/test_phase5.js && node tests/test_phase6.js && node tests/test_phase7.js && node tests/test_phase8.js && node tests/test_e2e_master.js"
+  },
+  "keywords": [
+    "blood-donation",
+    "express",
+    "mongodb",
+    "bootstrap5",
+    "full-stack"
+  ],
+  "author": "College Student Project",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "mongodb": "^6.10.0"
+  }
+}
