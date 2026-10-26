@@ -132,6 +132,32 @@ async function runPhase5Tests() {
     failed++;
   }
 
+  // --- GATE 3B: Confirm Password Mismatch Rejection (Security Loophole Fix) ---
+  try {
+    const mismatchRes = await request('POST', '/api/auth/register', {
+      name: 'Mismatch Tester',
+      email: `mismatch_${Date.now()}@example.com`,
+      phone: '9876543200',
+      city: 'Ahmedabad',
+      locality: 'Navrangpura',
+      role: 'donor',
+      bloodGroup: 'A+',
+      password: 'SecurePassword123',
+      confirmPassword: 'DifferentPassword456'
+    });
+
+    if (mismatchRes.statusCode === 400 && mismatchRes.data.success === false) {
+      console.log('✔ Gate 3B Passed: Mismatched password and confirmPassword rejected with HTTP 400.');
+      passed++;
+    } else {
+      console.error('✘ Gate 3B Failed: Server allowed registration with mismatched passwords:', mismatchRes.statusCode, mismatchRes.data);
+      failed++;
+    }
+  } catch (err) {
+    console.error('✘ Gate 3B Failed with error:', err.message);
+    failed++;
+  }
+
   // --- GATE 4: Invalid Login Credentials Rejection ---
   try {
     // 4A: Wrong password

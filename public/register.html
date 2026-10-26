@@ -156,10 +156,12 @@
                 <div class="col-md-6">
                   <label class="form-label text-xs font-semibold text-slate-700 block mb-1" for="reg-password">Password <span class="text-crimson-600">*</span></label>
                   <input type="password" class="form-control rounded-xl px-3.5 py-2 text-sm" id="reg-password" minlength="6" required placeholder="Min 6 characters">
+                  <div class="invalid-feedback text-xs">Password must be at least 6 characters.</div>
                 </div>
                 <div class="col-md-6">
                   <label class="form-label text-xs font-semibold text-slate-700 block mb-1" for="reg-confirm-password">Confirm Password <span class="text-crimson-600">*</span></label>
                   <input type="password" class="form-control rounded-xl px-3.5 py-2 text-sm" id="reg-confirm-password" minlength="6" required placeholder="Repeat password">
+                  <div class="invalid-feedback text-xs" id="confirm-password-feedback">Passwords do not match.</div>
                 </div>
               </div>
 
@@ -207,17 +209,56 @@
     });
 
     const form = document.getElementById('register-form');
+    const passwordInput = document.getElementById('reg-password');
+    const confirmPasswordInput = document.getElementById('reg-confirm-password');
+    const confirmFeedback = document.getElementById('confirm-password-feedback');
+
+    // Real-time password match validation
+    function validatePasswordMatch() {
+      const pass = passwordInput.value;
+      const confirmPass = confirmPasswordInput.value;
+
+      if (!confirmPass) {
+        confirmPasswordInput.setCustomValidity('');
+        confirmPasswordInput.classList.remove('is-invalid', 'is-valid');
+        return true;
+      }
+
+      if (pass !== confirmPass) {
+        confirmPasswordInput.setCustomValidity('Passwords do not match.');
+        confirmPasswordInput.classList.add('is-invalid');
+        confirmPasswordInput.classList.remove('is-valid');
+        if (confirmFeedback) confirmFeedback.textContent = 'Passwords do not match.';
+        return false;
+      } else {
+        confirmPasswordInput.setCustomValidity('');
+        confirmPasswordInput.classList.remove('is-invalid');
+        confirmPasswordInput.classList.add('is-valid');
+        return true;
+      }
+    }
+
+    passwordInput.addEventListener('input', validatePasswordMatch);
+    confirmPasswordInput.addEventListener('input', validatePasswordMatch);
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const alertBox = document.getElementById('register-alert');
       alertBox.className = 'd-none';
 
-      const password = document.getElementById('reg-password').value;
-      const confirmPassword = document.getElementById('reg-confirm-password').value;
+      const password = passwordInput.value;
+      const confirmPassword = confirmPasswordInput.value;
 
-      if (password !== confirmPassword) {
+      // Strict client-side password match check
+      if (!confirmPassword || password !== confirmPassword) {
+        confirmPasswordInput.setCustomValidity('Passwords do not match.');
+        confirmPasswordInput.classList.add('is-invalid');
+        confirmPasswordInput.classList.remove('is-valid');
+        confirmPasswordInput.focus();
+
         alertBox.className = 'alert alert-danger d-block py-2 text-xs rounded-xl';
-        alertBox.textContent = 'Passwords do not match.';
+        alertBox.textContent = 'Passwords do not match. Please ensure Password and Confirm Password are identical.';
+        alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
 
@@ -227,6 +268,7 @@
       if (role === 'donor' && !bloodGroup) {
         alertBox.className = 'alert alert-danger d-block py-2 text-xs rounded-xl';
         alertBox.textContent = 'Please select a blood group.';
+        alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
       }
 
@@ -248,7 +290,8 @@
         role: role,
         bloodGroup: role === 'donor' ? bloodGroup : null,
         isAvailable: role === 'donor' ? document.getElementById('reg-is-available').checked : false,
-        password: password
+        password: password,
+        confirmPassword: confirmPassword
       };
 
       try {
@@ -263,6 +306,7 @@
       } catch (err) {
         alertBox.className = 'alert alert-danger d-block py-2 text-xs rounded-xl';
         alertBox.textContent = err.message || 'Registration failed.';
+        alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         btn.disabled = false;
         btn.textContent = 'Create Account';
       }

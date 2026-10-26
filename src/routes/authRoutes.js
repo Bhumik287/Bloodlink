@@ -16,13 +16,21 @@ const PHONE_REGEX = /^[0-9]{10}$/;
 // 1. POST /api/auth/register - Register a new user
 router.post('/register', async (req, res, next) => {
   try {
-    const { name, email, phone, city, locality, role, bloodGroup, isAvailable, password } = req.body;
+    const { name, email, phone, city, locality, role, bloodGroup, isAvailable, password, confirmPassword } = req.body;
 
     // Field Validations
     if (!name || !email || !phone || !password) {
       return res.status(400).json({
         success: false,
         message: 'Name, email, phone number, and password are required.'
+      });
+    }
+
+    // Password confirmation match validation
+    if (confirmPassword !== undefined && confirmPassword !== null && password !== confirmPassword) {
+      return res.status(400).json({
+        success: false,
+        message: 'Passwords do not match. Please ensure Password and Confirm Password are identical.'
       });
     }
 
