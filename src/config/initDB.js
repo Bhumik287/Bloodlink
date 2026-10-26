@@ -82,7 +82,7 @@ async function initDatabase(seedDemoData = false) {
       { email: reqEmail },
       {
         $set: {
-          name: 'Ramesh Sharma',
+          name: 'shivam bhalgama',
           email: reqEmail,
           passwordHash: reqHash,
           phone: '9825012345',
