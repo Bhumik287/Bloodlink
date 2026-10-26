@@ -267,5 +267,5 @@ npm run test:all
 
 
 
-## 📄 9. Educational Disclaimer
+## 📄 8. Educational Disclaimer
 BloodLink is developed strictly as a college innovative assignment. It is designed to facilitate community communication between willing donors and patients. It does **not** perform medical diagnostic testing, guarantee blood supply, or substitute for certified hospital blood transfusion services.
