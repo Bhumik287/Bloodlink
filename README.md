@@ -265,23 +265,7 @@ npm run test:all
 
 ---
 
-## 🎓 8. College Viva & Examination Q&A Cheat Sheet
 
-When your professor asks you about the technical architecture and choices, use these concise points:
-
-**Q1: Why did you use native `MongoClient` instead of an ORM like Mongoose or MySQL?**
-> *"Sir, according to our course syllabus (Unit 4: Database Integration), we studied direct database connectivity using native drivers. Using the official `mongodb` package with `MongoClient` demonstrates a direct understanding of connection pooling, structured query objects, collection operations (`insertOne`, `find`, `updateOne`, `deleteOne`), and MongoDB aggregation pipelines without relying on heavy abstractions."*
-
-**Q2: How is security handled in the application?**
-> *"In Unit 5, we learned application security principles. We hash all user passwords with `bcryptjs` using 10 salt rounds before storing them in MongoDB, ensuring plaintext passwords are never saved. For authentication, we use server-side session management with HTTP-only cookies (`express-session`), role-based access control middleware (`requireAuth`, `requireRole`, `requireAdmin`), and strict ownership checks ensuring users cannot alter another person's records."*
-
-**Q3: How do you prevent duplicate responses from the same donor?**
-> *"We implemented a compound unique index in MongoDB on `{ requestId: 1, donorId: 1 }` in the `donorResponses` collection, supplemented by server-side verification in `requestRoutes.js`. If a donor attempts to click 'I'm Available to Help' twice on the same request, the database rejects it with duplicate key error code 11000, returning a clear HTTP 400 Bad Request to the client."*
-
-**Q4: How does the frontend communicate with the backend?**
-> *"The frontend uses standard JavaScript `Fetch API` wrappers centralized in `public/js/api.js`. When a user submits a form or filters requests, the client dispatches asynchronous HTTP requests (`GET`, `POST`, `PUT`, `DELETE`) with JSON payloads. The Express server parses the request body, executes business logic, and returns standardized JSON responses which dynamically update the DOM."*
-
----
 
 ## 📄 9. Educational Disclaimer
 BloodLink is developed strictly as a college innovative assignment. It is designed to facilitate community communication between willing donors and patients. It does **not** perform medical diagnostic testing, guarantee blood supply, or substitute for certified hospital blood transfusion services.
