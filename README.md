@@ -4,8 +4,6 @@
 > **Type:** Innovative College Assignment / Laboratory Project  
 > **Department:** Department of Computer Science & Engineering, Institute of Technology, Nirma University  
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Bhumik287/Bloodlink)
-
 ---
 
 ## 📋 1. Project Overview & Purpose
@@ -193,7 +191,7 @@ erDiagram
 
 ---
 
-## 🔑 5. Pre-Seeded Demonstration Accounts (For College Viva)
+## 🔑 5. Pre-Seeded Demonstration Accounts
 
 For fast, effortless evaluation during your viva examination or presentation, the database comes pre-seeded with 3 standard test accounts. You can type them manually or click the **Demo Quick Fill** buttons on the Login page:
 
