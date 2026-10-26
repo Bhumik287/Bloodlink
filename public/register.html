@@ -49,10 +49,23 @@
           <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white text-crimson-600 font-black shadow-sm">🩸</span>
           <span>BloodLink</span>
         </a>
-        <div class="ms-auto flex items-center gap-3">
-          <a class="text-white/90 hover:text-white font-medium text-sm" href="/">🏠 Home</a>
-          <a class="text-white/90 hover:text-white font-medium text-sm" href="/find-blood.html">Find Blood</a>
-          <a class="text-white/90 hover:text-white font-medium text-sm" href="/login.html">Login</a>
+        <button class="navbar-toggler border-0 focus:outline-none focus:ring-2 focus:ring-white/40" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNavbar">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 font-medium">
+            <li class="nav-item"><a class="nav-link text-white/90 hover:text-white" href="/">🏠 Home</a></li>
+            <li class="nav-item"><a class="nav-link text-white/90 hover:text-white" href="/find-blood.html">Find Blood</a></li>
+            <li class="nav-item"><a class="nav-link text-white/90 hover:text-white" href="/request-blood.html">Request Blood</a></li>
+          </ul>
+          <ul class="navbar-nav ms-auto items-center">
+            <li class="nav-item">
+              <a class="nav-link btn bg-white text-crimson-600 hover:bg-slate-100 font-semibold px-4 py-1.5 rounded-lg shadow-sm" href="/login.html">
+                🔑 Login
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>

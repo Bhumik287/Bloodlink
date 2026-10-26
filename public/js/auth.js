@@ -40,21 +40,21 @@ function renderAuthenticatedNav(user) {
     profileLink = `<li class="nav-item"><a class="nav-link text-white/90 hover:text-white" href="/profile.html">Profile</a></li>`;
   }
 
-  // Always show a visible, direct "Logout" button so users can easily switch accounts!
+  let dashboardLink = '';
+  if (!window.location.pathname.includes('dashboard.html')) {
+    dashboardLink = `<li class="nav-item"><a class="nav-link text-white/90 hover:text-white" href="/dashboard.html">Dashboard</a></li>`;
+  }
+
+  // Render clean authenticated actions without duplicating primary navbar links
   navContainer.innerHTML = `
-    <li class="nav-item">
-      <a class="nav-link text-white/90 hover:text-white" href="/">🏠 Home</a>
-    </li>
     ${adminLink}
-    <li class="nav-item">
-      <a class="nav-link text-white/90 hover:text-white" href="/dashboard.html">Dashboard</a>
-    </li>
+    ${dashboardLink}
     ${profileLink}
-    <li class="nav-item d-flex align-items-center ms-lg-2 my-1 my-lg-0">
+    <li class="nav-item d-flex align-items-center ms-lg-2 my-2 my-lg-0">
       <span class="text-white text-xs font-semibold me-2">${escapeNavHtml(user.name)}${roleBadge}</span>
     </li>
     <li class="nav-item ms-lg-1 my-1 my-lg-0">
-      <button class="btn btn-outline-light btn-sm text-xs rounded-lg px-2.5 py-1 font-semibold" onclick="handleLogout()" title="Log out and switch account">
+      <button class="btn btn-outline-light btn-sm text-xs rounded-lg px-2.5 py-1 font-semibold w-100 w-lg-auto" onclick="handleLogout()" title="Log out and switch account">
         🚪 Logout
       </button>
     </li>
@@ -67,13 +67,10 @@ function renderUnauthenticatedNav() {
 
   navContainer.innerHTML = `
     <li class="nav-item">
-      <a class="nav-link text-white/90 hover:text-white" href="/">🏠 Home</a>
+      <a class="nav-link text-white/90 hover:text-white font-medium" href="/login.html">🔑 Login</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link text-white/90 hover:text-white" href="/login.html">Login</a>
-    </li>
-    <li class="nav-item ms-lg-2">
-      <a class="nav-link btn btn-light text-danger btn-sm px-3 font-semibold rounded-lg" href="/register.html">Register</a>
+    <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+      <a class="nav-link btn bg-white text-crimson-600 hover:bg-slate-100 font-semibold px-4 py-1.5 rounded-lg shadow-sm" href="/register.html">Register</a>
     </li>
   `;
 }
@@ -97,6 +94,22 @@ function escapeNavHtml(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
 }
+
+// Automatically close mobile navbar collapse when a link is clicked
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('.navbar-collapse .nav-link:not(.dropdown-toggle)');
+  if (link && window.innerWidth < 992) {
+    const navbarCollapse = link.closest('.navbar-collapse');
+    if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+      if (typeof bootstrap !== 'undefined' && bootstrap.Collapse) {
+        const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse) || new bootstrap.Collapse(navbarCollapse, { toggle: false });
+        bsCollapse.hide();
+      } else {
+        navbarCollapse.classList.remove('show');
+      }
+    }
+  }
+});
 
 // Auto-run on DOM ready
 document.addEventListener('DOMContentLoaded', () => {

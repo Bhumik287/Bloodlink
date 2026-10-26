@@ -85,6 +85,67 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* --------------------------------------------------------------------------
+   CRITICAL FIX: Override Tailwind CSS .collapse { visibility: collapse; }
+   Tailwind CDN sets `.collapse { visibility: collapse; }` which causes the
+   mobile navbar to become invisible 1 second after opening when transition ends.
+   -------------------------------------------------------------------------- */
+.navbar-collapse,
+.navbar-collapse.collapse,
+.navbar-collapse.collapsing,
+.navbar-collapse.collapse.show,
+.navbar-collapse.show {
+  visibility: visible !important;
+}
+
+/* Mobile Responsive Navbar Dropdown Enhancement (< 992px) */
+@media (max-width: 991.98px) {
+  .navbar-custom .navbar-collapse {
+    background: linear-gradient(180deg, rgba(168, 28, 28, 0.98) 0%, rgba(120, 15, 15, 0.99) 100%);
+    padding: 1rem 1.25rem;
+    border-radius: 1rem;
+    margin-top: 0.75rem;
+    box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .bg-slate-900 .navbar-collapse {
+    background: rgba(15, 23, 42, 0.98);
+    padding: 1rem 1.25rem;
+    border-radius: 1rem;
+    margin-top: 0.75rem;
+    box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .navbar-nav {
+    gap: 0.25rem;
+  }
+
+  .navbar-custom .nav-link,
+  .bg-slate-900 .nav-link {
+    padding: 0.6rem 0.85rem !important;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  #navbar-auth-links {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    width: 100%;
+  }
+
+  #navbar-auth-links .nav-item {
+    width: 100%;
+  }
+
+  #navbar-auth-links .btn {
+    width: 100%;
+    margin-top: 0.25rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
    4. Custom Buttons & Interactivity (Tailwind/CSS hybrid)
    -------------------------------------------------------------------------- */
 .btn {
